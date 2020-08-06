@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+	<div th:replace="fragments/header.html :: myheader"></div>
+
+	<div class="container my-2">
+		<h1>
+			<span class="titles-style"
+				th:text="|Customer / Count: ${#lists.size(listCustomerAccounts)}|"></span>
+		</h1>
+
+		<a th:href="@{/showCustomerForm}"
+			class="btn btn-primary btn-sm mb-3"> Add Customer </a>
+		<div id="navbar" class="collapse navbar-collapse">
+			<ul class="nav navbar-nav">
+				<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
+			</ul>
+		</div>
+		<table border="1" class="table table-striped table-responsive-md">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Email</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="userAccount : ${listCustomerAccounts}">
+					<td th:text="${userAccount.id}"></td>
+					<td th:text="${userAccount.firstName}"></td>
+					<td th:text="${userAccount.lastName}"></td>
+					<td th:text="${userAccount.email}"></td>
+					<td><a th:href="@{/edit/{id}(id=${userAccount.id})}"
+						class="btn btn-primary">Update</a> <a
+						th:href="@{/deleteCustomer/{id}(id=${userAccount.id})}"
+						class="btn btn-danger">Delete</a> 
+				</tr>
+			</tbody>
+		</table>
+
+		<div class="container">
+			
+			<p>
+				Welcome <span sec:authentication=={userAccount.username}>User</span>
+			</p>
+		</div>
+	</div>
+</body>
+
+</html>
