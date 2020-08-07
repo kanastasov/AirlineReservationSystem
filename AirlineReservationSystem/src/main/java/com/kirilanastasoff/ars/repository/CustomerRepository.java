@@ -8,4 +8,6 @@ import com.kirilanastasoff.ars.model.customer.Customer;
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
 	 Customer findByEmail(String email);
+	 
+	 Customer findByUsername(String username);
 }

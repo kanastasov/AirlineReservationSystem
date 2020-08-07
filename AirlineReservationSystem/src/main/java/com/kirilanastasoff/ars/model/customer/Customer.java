@@ -59,4 +59,7 @@ public class Customer {
 //	inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 	private Set<Role> roles;
 
+	 
+	@Column(name = "username")
+	private String username;
 }
