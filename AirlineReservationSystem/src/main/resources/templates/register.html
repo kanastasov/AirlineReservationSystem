@@ -13,7 +13,7 @@
 <title>Register</title>
 </head>
 <body>
-<div th:replace="fragments/header.html :: myheader"></div>
+	<div th:replace="fragments/header.html :: myheader"></div>
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header">
@@ -24,7 +24,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-			
+
 			</div>
 		</div>
 	</nav>
@@ -37,36 +37,46 @@
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
 				<h1>Login page</h1>
-					<img th:src="@{/images/Register.png}" class="img-responsive center-block"
-			width="300" height="300" alt="Logo" />
-				<form action="#" th:action="@{/register}"
-					th:object="${customerObj}" method="POST">
+				<img th:src="@{/images/Register.png}"
+					class="img-responsive center-block" width="300" height="300"
+					alt="Logo" />
+				<form action="#" th:action="@{/register}" th:object="${customerObj}"
+					method="POST">
 
-					<input type="text" th:field="*{firstName}" placeholder="First Name"
-						class="form-control mb-4 col-4">
-					<p th:if="${#fields.hasErrors('*{firstName}')}"
-						th:errors="*{firstName}">Need valid first name</p>
+					<div class="form-group">
+						<input type="text" th:field="*{firstName}"
+							placeholder="First Name" class="form-control mb-4 col-4">
+						<label th:if="${#fields.hasErrors('firstName')}"
+							th:errors="*{firstName}" class="validation-message"> </label>
+					</div>
 
-					<input type="text" th:field="*{lastName}" placeholder="Last Name"
-						class="form-control mb-4 col-4">
-					<p th:if="${#fields.hasErrors('*{lastName}')}"
-						th:errors="*{lastName}">Need valid last name</p>
+					<div class="form-group">
+						<input type="text" th:field="*{lastName}" placeholder="Last Name"
+							class="form-control mb-4 col-4"> <label
+							th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
+							class="validation-message"> </label>
+					</div>
 
-					<input type="text" th:field="*{email}" placeholder="Email"
-						class="form-control mb-4 col-4">
-					<p th:if="${#fields.hasErrors('*{email}')}" th:errors="*{email}">Need
-						valid email info</p>
-						
-							<input type="text" th:field="*{username}" placeholder="Username"
-						class="form-control mb-4 col-4">
-					<p th:if="${#fields.hasErrors('*{username}')}" th:errors="*{username}">Need
-						valid username</p>
-						
+					<div class="form-group">
+						<input type="text" th:field="*{email}" placeholder="email"
+							class="form-control mb-4 col-4"> <label
+							th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+							class="validation-message"> </label>
+					</div>
 
-					<input type="password" th:field="*{password}"
-						placeholder="password" class="form-control mb-4 col-4">
-					<p th:if="${#fields.hasErrors('*{password}')}"
-						th:errors="*{password}">Need valid password</p>
+					<div class="form-group">
+						<input type="text" th:field="*{username}" placeholder="username"
+							class="form-control mb-4 col-4"> <label
+							th:if="${#fields.hasErrors('username')}" th:errors="*{username}"
+							class="validation-message"> </label>
+					</div>
+
+					<div class="form-group">
+						<input type="password" th:field="*{password}" placeholder="password"
+							class="form-control mb-4 col-4"> <label
+							th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+							class="validation-message"> </label>
+					</div>
 
 
 					<button type="submit" class="btn btn-info col-2">Save
@@ -87,4 +97,4 @@
 	<script type="text/javascript"
 		th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
 </body>
-</html> 
+</html>

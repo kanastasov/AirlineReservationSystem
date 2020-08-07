@@ -50,6 +50,11 @@
                             <label for="password"><i class="zmdi zmdi-lock"></i></label>
                             <input type="password" name="password" id="password" placeholder="Password"/>
                         </div>
+                        
+                        <div align = "center" th:if= "${param.error}">
+                        	<p style ="font-size:25; color: #FF1C19;">Customer name or password invalid, please enter correct details!  </p>
+                        </div>
+                        
 					<div class="form-group">
 						<div class="row">
 							<div class="col-sm-6 col-sm-offset-3">
