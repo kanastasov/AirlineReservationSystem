@@ -65,10 +65,10 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
 		tempCustomer.setFirstName(customer.getFirstName());
 		tempCustomer.setLastName(customer.getLastName());
 		tempCustomer.setPassword(encoder.encode(customer.getPassword()));
+		tempCustomer.setUsername(customer.getUsername());
 		
 		Role customerRole = roleRepository.findByRole("ADMIN");
 		tempCustomer.setRoles(new HashSet<Role>(Arrays.asList(customerRole)));
-		
 		
 		this.customerRepository.save(tempCustomer);
 		return tempCustomer;
@@ -76,8 +76,8 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
 
 	@Override
 	@Transactional
-	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		Customer customer = customerRepository.findByEmail(email);
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		Customer customer = customerRepository.findByUsername(username);
 		if(customer == null) {
 			throw new UsernameNotFoundException("Invalid details");
 		}
@@ -96,6 +96,11 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
 	
 	private UserDetails buildUserForAuthentication(Customer customer, List<GrantedAuthority> authorities) {
 		return new User(customer.getEmail(), customer.getPassword(),true, true, true, true, authorities);
+	}
+
+	@Override
+	public Customer findCustomerByUsername(String username) {
+		return this.customerRepository.findByUsername(username);
 	}
 	
 	

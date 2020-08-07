@@ -56,6 +56,12 @@
 						class="form-control mb-4 col-4">
 					<p th:if="${#fields.hasErrors('*{email}')}" th:errors="*{email}">Need
 						valid email info</p>
+						
+							<input type="text" th:field="*{username}" placeholder="Username"
+						class="form-control mb-4 col-4">
+					<p th:if="${#fields.hasErrors('*{username}')}" th:errors="*{username}">Need
+						valid username</p>
+						
 
 					<input type="password" th:field="*{password}"
 						placeholder="password" class="form-control mb-4 col-4">

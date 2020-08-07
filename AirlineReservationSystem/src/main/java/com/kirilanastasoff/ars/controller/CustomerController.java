@@ -3,6 +3,9 @@ package com.kirilanastasoff.ars.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,11 +24,10 @@ public class CustomerController {
 
 	@Autowired
 	private CustomerService customerService;
-	
+
 	@Autowired
 	private BCryptPasswordEncoder bcrypt;
-	
-	
+
 	@GetMapping("/")
 	public String showAllCustomers(Model model) {
 		model.addAttribute("listCustomerAccounts", customerService.getAllCustomers());
@@ -49,24 +51,38 @@ public class CustomerController {
 	@PostMapping(value = "/register")
 	public String saveCustomer(@ModelAttribute("customerObj") @Valid Customer customer, BindingResult bindingResult) {
 		Customer customerTemp = customerService.findByEmail(customer.getEmail());
-		if(customerTemp != null) {
+		if (customerTemp != null) {
 			bindingResult.rejectValue("email", "There is already an account with this email");
 		}
-		
-		if(bindingResult.hasErrors()) {
+
+		if (bindingResult.hasErrors()) {
 			return "register";
 		}
 		customerService.saveCustomer(customer);
 		return "redirect:/";
 	}
-	
-	@GetMapping(value = "/deleteCustomer/{id}") 
-	public String deleteCustomerById(@PathVariable (value = "id") Long id) {
+
+	@GetMapping(value = "/deleteCustomer/{id}")
+	public String deleteCustomerById(@PathVariable(value = "id") Long id) {
 		customerService.deleteCustomerById(id);
 		return "redirect:/";
 	}
-	
-	
-	
-	
+
+	@GetMapping(value = "/admin/home")
+	public ModelAndView home() {
+		ModelAndView modelAndView = new ModelAndView();
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = "";
+		
+		if(principal instanceof UserDetails) {
+			username = ((UserDetails) principal).getUsername();
+		} else {
+			username = principal.toString();
+		}
+		modelAndView.addObject("adminObj", "Welcome " + username);
+		modelAndView.addObject("adminMessage", "Content available only for users with admin rights");
+		modelAndView.setViewName("admin/home");
+		return modelAndView;
+	}
+
 }
