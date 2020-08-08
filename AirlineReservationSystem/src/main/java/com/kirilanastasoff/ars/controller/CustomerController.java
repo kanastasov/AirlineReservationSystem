@@ -49,17 +49,22 @@ public class CustomerController {
 	}
 
 	@PostMapping(value = "/register")
-	public String saveCustomer(@ModelAttribute("customerObj") @Valid Customer customer, BindingResult bindingResult) {
+	public ModelAndView saveCustomer(@ModelAttribute("customerObj") @Valid Customer customer, BindingResult bindingResult) {
+		ModelAndView modelAndView = new ModelAndView();
+		
 		Customer customerTemp = customerService.findByEmail(customer.getEmail());
 		if (customerTemp != null) {
 			bindingResult.rejectValue("email", "There is already an account with this email");
 		}
 
 		if (bindingResult.hasErrors()) {
-			return "register";
+			modelAndView.setViewName("register");
+			return modelAndView;
 		}
 		customerService.saveCustomer(customer);
-		return "redirect:/";
+		modelAndView.addObject("successMessage", "Customer has been registered successfully");
+		modelAndView.setViewName("redirect:/");
+		return modelAndView;
 	}
 
 	@GetMapping(value = "/deleteCustomer/{id}")

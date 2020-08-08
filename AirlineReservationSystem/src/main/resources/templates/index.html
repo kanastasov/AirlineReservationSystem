@@ -23,6 +23,7 @@
 					<th>First Name</th>
 					<th>Last Name</th>
 					<th>Email</th>
+					<th>Username</th>
 					<th>Actions</th>
 				</tr>
 			</thead>
@@ -32,6 +33,7 @@
 					<td th:text="${userAccount.firstName}"></td>
 					<td th:text="${userAccount.lastName}"></td>
 					<td th:text="${userAccount.email}"></td>
+						<td th:text="${userAccount.username}"></td>
 					<td><a th:href="@{/edit/{id}(id=${userAccount.id})}"
 						class="btn btn-primary">Update</a> <a
 						th:href="@{/deleteCustomer/{id}(id=${userAccount.id})}"
@@ -41,7 +43,6 @@
 		</table>
 
 		<div class="container">
-			
 			<p>
 				Welcome <span sec:authentication=={userAccount.username}>User</span>
 			</p>
