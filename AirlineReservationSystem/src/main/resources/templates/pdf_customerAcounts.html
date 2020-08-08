@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Customers</title>
+</head>
+
+<body>
+	
+	<h1>
+		<span class="titles-style"
+			th:text="|Customer / Count: ${#lists.size(customerObj)}|"></span>
+	</h1>
+	
+	<img class="logo" src="images/htmlToPdf.png" />
+	<div class="container">
+		<table border="1" class="table table-striped table-responsive-md">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Email</th>
+					<th>User name</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="customer : ${customerObj}">
+					<td th:text="${customer.id}"></td>
+					<td th:text="${customer.firstName}"></td>
+					<td th:text="${customer.lastName}"></td>
+					<td th:text="${customer.email}"></td>
+					<td th:text="${customer.username}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
