@@ -1,7 +1,14 @@
 package com.kirilanastasoff.ars.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.apache.tomcat.jni.File;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,6 +25,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kirilanastasoff.ars.model.customer.Customer;
 import com.kirilanastasoff.ars.service.CustomerService;
+import com.kirilanastasoff.ars.service.PdfService;
+import com.lowagie.text.DocumentException;
 
 @Controller
 public class CustomerController {
@@ -27,6 +36,9 @@ public class CustomerController {
 
 	@Autowired
 	private BCryptPasswordEncoder bcrypt;
+
+	@Autowired
+	private PdfService pdfService;
 
 	@GetMapping("/")
 	public String showAllCustomers(Model model) {
@@ -49,9 +61,10 @@ public class CustomerController {
 	}
 
 	@PostMapping(value = "/register")
-	public ModelAndView saveCustomer(@ModelAttribute("customerObj") @Valid Customer customer, BindingResult bindingResult) {
+	public ModelAndView saveCustomer(@ModelAttribute("customerObj") @Valid Customer customer,
+			BindingResult bindingResult) {
 		ModelAndView modelAndView = new ModelAndView();
-		
+
 		Customer customerTemp = customerService.findByEmail(customer.getEmail());
 		if (customerTemp != null) {
 			bindingResult.rejectValue("email", "There is already an account with this email");
@@ -78,8 +91,8 @@ public class CustomerController {
 		ModelAndView modelAndView = new ModelAndView();
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username = "";
-		
-		if(principal instanceof UserDetails) {
+
+		if (principal instanceof UserDetails) {
 			username = ((UserDetails) principal).getUsername();
 		} else {
 			username = principal.toString();
@@ -88,6 +101,21 @@ public class CustomerController {
 		modelAndView.addObject("adminMessage", "Content available only for users with admin rights");
 		modelAndView.setViewName("admin/home");
 		return modelAndView;
+	}
+
+	@GetMapping("/download-pdf")
+	public void downloadPDFResource(HttpServletResponse response) {
+		try {
+			Path file = Paths.get(pdfService.generatePdf().getAbsolutePath());
+			if (Files.exists(file)) {
+				response.setContentType("application/pdf");
+				response.addHeader("Content-Disposition", "attachment; filename=" + file.getFileName());
+				Files.copy(file, response.getOutputStream());
+				response.getOutputStream().flush();
+			}
+		} catch (DocumentException | IOException ex) {
+			ex.printStackTrace();
+		}
 	}
 
 }

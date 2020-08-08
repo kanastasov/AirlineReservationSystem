@@ -43,6 +43,9 @@
 		</table>
 
 		<div class="container">
+			<img th:src="@{/images/pdf.png}" class="img-responsive center-block"
+			width="100" height="100" alt="Logo" />
+			<a th:href = "@{/download-pdf}">Download PDF Document</a>
 			<p>
 				Welcome <span sec:authentication=={userAccount.username}>User</span>
 			</p>
