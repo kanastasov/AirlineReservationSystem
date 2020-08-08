@@ -36,7 +36,19 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
 	@Autowired
 	private BCryptPasswordEncoder encoder;
 	
-	
+	public CustomerServiceImpl() {
+		super();
+	}
+
+	@Autowired
+	public CustomerServiceImpl(CustomerRepository customerRepository, RoleRepository roleRepository,
+			BCryptPasswordEncoder encoder) {
+		super();
+		this.customerRepository = customerRepository;
+		this.roleRepository = roleRepository;
+		this.encoder = encoder;
+	}
+
 	@Override
 	public List<Customer> getAllCustomers() {
 		return  customerRepository.findAll();
