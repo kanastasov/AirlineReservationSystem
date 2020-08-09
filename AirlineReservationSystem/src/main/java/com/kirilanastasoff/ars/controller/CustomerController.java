@@ -127,7 +127,7 @@ public class CustomerController {
 	public ResponseEntity<Customer> getCustomerByEmail(@PathVariable("email") String email) throws CustomerException {
 		Customer customer = customerService.findByEmail(email);
 		if(customer == null) {
-			throw new CustomerException("Customer does not exist");
+			throw new CustomerException("email address is not valid: " + email);
 		}
 		return new ResponseEntity<Customer>(customer, HttpStatus.OK);
 		
