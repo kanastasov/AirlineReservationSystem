@@ -21,8 +21,8 @@ import org.springframework.stereotype.Service;
 
 import com.kirilanastasoff.ars.model.customer.Customer;
 import com.kirilanastasoff.ars.model.customer.Role;
-import com.kirilanastasoff.ars.repository.CustomerRepository;
-import com.kirilanastasoff.ars.repository.RoleRepository;
+import com.kirilanastasoff.ars.repository.customer.CustomerRepository;
+import com.kirilanastasoff.ars.repository.customer.RoleRepository;
 
 @Service
 public class CustomerServiceImpl implements CustomerService, UserDetailsService {

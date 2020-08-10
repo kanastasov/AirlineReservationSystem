@@ -9,8 +9,8 @@ import org.mockito.Mockito;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.kirilanastasoff.ars.model.customer.Customer;
-import com.kirilanastasoff.ars.repository.CustomerRepository;
-import com.kirilanastasoff.ars.repository.RoleRepository;
+import com.kirilanastasoff.ars.repository.customer.CustomerRepository;
+import com.kirilanastasoff.ars.repository.customer.RoleRepository;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
