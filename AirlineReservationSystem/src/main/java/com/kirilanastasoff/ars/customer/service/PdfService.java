@@ -1,4 +1,4 @@
-package com.kirilanastasoff.ars.service;
+package com.kirilanastasoff.ars.customer.service;
 
 import java.io.File;
 import java.io.IOException;

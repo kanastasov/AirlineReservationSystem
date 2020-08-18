@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.kirilanastasoff.ars.customer.service.CustomerServiceImpl;
 import com.kirilanastasoff.ars.model.customer.Customer;
 import com.kirilanastasoff.ars.repository.customer.CustomerRepository;
 import com.kirilanastasoff.ars.repository.customer.RoleRepository;
