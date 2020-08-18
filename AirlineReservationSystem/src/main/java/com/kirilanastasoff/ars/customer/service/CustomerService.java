@@ -1,4 +1,4 @@
-package com.kirilanastasoff.ars.service;
+package com.kirilanastasoff.ars.customer.service;
 
 import java.util.List;
 import java.util.Optional;

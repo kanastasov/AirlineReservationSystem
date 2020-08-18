@@ -27,10 +27,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kirilanastasoff.ars.customer.service.CustomerService;
+import com.kirilanastasoff.ars.customer.service.PdfService;
 import com.kirilanastasoff.ars.exceptions.CustomerException;
 import com.kirilanastasoff.ars.model.customer.Customer;
-import com.kirilanastasoff.ars.service.CustomerService;
-import com.kirilanastasoff.ars.service.PdfService;
 import com.lowagie.text.DocumentException;
 
 @Controller
