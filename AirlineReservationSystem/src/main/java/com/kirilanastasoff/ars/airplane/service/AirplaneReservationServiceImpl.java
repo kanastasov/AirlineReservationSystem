@@ -63,10 +63,10 @@ public class AirplaneReservationServiceImpl implements AirplaneReservationServic
 	public AmericanAirlines getAmericanAirlines(Customer customer) {
 		Customer tempCustomer = customerRepository.findByEmail(customer.getEmail());
 		if(tempCustomer != null) {
-			Optional<AmericanAirlines> americanAirlines = Optional.ofNullable(aaRepository.findByCustomer(tempCustomer));
-			if(americanAirlines.isPresent()) {
-				return americanAirlines.get();
-			}
+//			Optional<AmericanAirlines> americanAirlines = Optional.ofNullable(aaRepository.findByCustomer(tempCustomer));
+//			if(americanAirlines.isPresent()) {
+//				return americanAirlines.get();
+//			}
 		}
 		return null;
 	}

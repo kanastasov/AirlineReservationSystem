@@ -10,5 +10,5 @@ import com.kirilanastasoff.ars.model.airplane.FlightSchedule;
 
 @Repository
 public interface FlightScheduleRepository extends JpaRepository<FlightSchedule, Long> {
-	FlightSchedule findByFlightDetailAndFlightDate(Flight flight, LocalDate flightDate);
+//	FlightSchedule findByFlightDetailAndFlightDate(Flight flight, LocalDate flightDate);
 }
