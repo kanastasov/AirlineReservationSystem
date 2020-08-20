@@ -27,10 +27,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kirilanastasoff.ars.airplane.service.AirplaneReservationService;
 import com.kirilanastasoff.ars.customer.service.CustomerService;
 import com.kirilanastasoff.ars.customer.service.PdfService;
 import com.kirilanastasoff.ars.exceptions.CustomerException;
+import com.kirilanastasoff.ars.model.airplane.AmericanAirlines;
+import com.kirilanastasoff.ars.model.airplane.Flight;
 import com.kirilanastasoff.ars.model.customer.Customer;
+import com.kirilanastasoff.ars.repository.airplane.FlightRepository;
 import com.lowagie.text.DocumentException;
 
 @Controller
@@ -44,6 +48,11 @@ public class CustomerController {
 
 	@Autowired
 	private PdfService pdfService;
+	
+	
+	@Autowired
+	private AirplaneReservationService airplaneReservationService;
+	
 
 	@GetMapping("/")
 	public String showAllCustomers(Model model) {
@@ -140,6 +149,66 @@ public class CustomerController {
 		
 	}
 	
+	
+	@GetMapping("/flight")
+	public ModelAndView flightDetails() {
+		ModelAndView modelAndView = new ModelAndView("flight");
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = "";
+
+		if (principal instanceof UserDetails) {
+			username = ((UserDetails) principal).getUsername();
+		} else {
+			username = principal.toString();
+		}
+		
+		modelAndView.addObject("flightObj", "Welcome " + username);
+		modelAndView.setViewName("flight");
+//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//		Customer customer = customerService.findByEmail(auth.getName());
+//		AmericanAirlines americanAirlines = airplaneReservationService.getAmericanAirlines(customer);
+//		
+//		modelAndView.addObject("customerObjData", customer);
+//		modelAndView.addObject("americanAirlinesObjData", americanAirlines);
+		return modelAndView;
+	}
+	
+	@PostMapping("/flight")
+	public ModelAndView addFlight(@Valid @ModelAttribute("customerObjData") BindingResult bindingResult) {
+		ModelAndView modelAndView = new ModelAndView("flight");
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Customer customer = customerService.findByEmail(auth.getName());
+		AmericanAirlines americanAirlines = airplaneReservationService.getAmericanAirlines(customer);
+		modelAndView.addObject("customerObjData", customer);
+		modelAndView.addObject("americanAirlinesObjData", americanAirlines);
+		
+		if(!bindingResult.hasErrors()) {
+			Flight flight = new Flight();
+			flight.setAmericanAirlines(americanAirlines);
+			AmericanAirlines updateAirlines = airplaneReservationService.updateAmericanAirlines(americanAirlines, flight);
+			modelAndView.addObject("flightObjData", customer);
+			modelAndView.addObject("americanAirlinesObjData", updateAirlines);
+		}
+		modelAndView.setViewName("redirect:/");
+		return modelAndView;
+	}
+	
+	@GetMapping("/airplane")
+	public ModelAndView airplaneDetails() {
+		ModelAndView modelAndView = new ModelAndView("airplan e");
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = "";
+
+		if (principal instanceof UserDetails) {
+			username = ((UserDetails) principal).getUsername();
+		} else {
+			username = principal.toString();
+		}
+		
+		modelAndView.addObject("airplaneObj", "Welcome " + username);
+		modelAndView.setViewName("airplane");
+		return modelAndView;
+	}
 	
 
 }

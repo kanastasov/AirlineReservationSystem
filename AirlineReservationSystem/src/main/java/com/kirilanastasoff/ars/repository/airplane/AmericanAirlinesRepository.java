@@ -11,7 +11,7 @@ public interface AmericanAirlinesRepository extends JpaRepository<AmericanAirlin
 
 	AmericanAirlines findByCode(String code);
 	
-	AmericanAirlines findByCustomer(Customer customer);
+//	AmericanAirlines findByCustomer(Customer customer);
 	
 	AmericanAirlines findByName(String name);
 }
