@@ -195,7 +195,7 @@ public class CustomerController {
 	
 	@GetMapping("/airplane")
 	public ModelAndView airplaneDetails() {
-		ModelAndView modelAndView = new ModelAndView("airplan e");
+		ModelAndView modelAndView = new ModelAndView("airplane");
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username = "";
 
@@ -209,6 +209,44 @@ public class CustomerController {
 		modelAndView.setViewName("airplane");
 		return modelAndView;
 	}
+	
+	@GetMapping("/americanairlines")
+	public ModelAndView americanAirlinesDetails() {
+		ModelAndView modelAndView = new ModelAndView("americanairlines");
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = "";
+
+		if (principal instanceof UserDetails) {
+			username = ((UserDetails) principal).getUsername();
+		} else {
+			username = principal.toString();
+		}
+		
+		modelAndView.addObject("americanairlinesObj", "Welcome " + username);
+		modelAndView.setViewName("americanairlines");
+		return modelAndView;
+	}
+	
+	
+	
+	@GetMapping("/profile")
+	public ModelAndView profileDetails() {
+		ModelAndView modelAndView = new ModelAndView("profile");
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = "";
+
+		if (principal instanceof UserDetails) {
+			username = ((UserDetails) principal).getUsername();
+		} else {
+			username = principal.toString();
+		}
+		
+		modelAndView.addObject("profileObj", "Welcome " + username);
+		modelAndView.setViewName("profile");
+		return modelAndView;
+	}
+	
+	
 	
 
 }
