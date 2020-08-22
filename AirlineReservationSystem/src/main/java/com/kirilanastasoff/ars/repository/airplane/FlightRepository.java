@@ -10,7 +10,7 @@ import com.kirilanastasoff.ars.model.airplane.Flight;
 
 @Repository
 public interface FlightRepository extends JpaRepository<Flight, Long> {
-		List<Flight> findByFare(String fare);
+		List<Flight> findByFare(int fare);
 		
 //		List<Flight> findByAmericanAirlines(AmericanAirlines americanAirlines);
 }
