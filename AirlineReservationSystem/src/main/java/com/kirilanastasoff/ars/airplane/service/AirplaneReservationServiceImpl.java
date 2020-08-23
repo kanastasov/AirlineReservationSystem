@@ -15,6 +15,7 @@ import com.kirilanastasoff.ars.model.airplane.FlightSchedule;
 import com.kirilanastasoff.ars.model.airplane.Stop;
 import com.kirilanastasoff.ars.model.airplane.Ticket;
 import com.kirilanastasoff.ars.model.customer.Customer;
+import com.kirilanastasoff.ars.repository.airplane.AirplanesRepository;
 import com.kirilanastasoff.ars.repository.airplane.AmericanAirlinesRepository;
 import com.kirilanastasoff.ars.repository.airplane.FlightRepository;
 import com.kirilanastasoff.ars.repository.airplane.FlightScheduleRepository;
@@ -27,7 +28,6 @@ public class AirplaneReservationServiceImpl implements AirplaneReservationServic
 
 	@Autowired
 	private StopRepository stopRepository;
-	
 	
 	@Autowired
 	private CustomerRepository customerRepository;
@@ -43,6 +43,9 @@ public class AirplaneReservationServiceImpl implements AirplaneReservationServic
 	
 	@Autowired
 	private TicketRepository ticketRepository;
+	
+	@Autowired
+	private AirplanesRepository airplanesRepository;
 	
 	@Override
 	public Set<Stop> getAllStops() {
@@ -160,6 +163,21 @@ public class AirplaneReservationServiceImpl implements AirplaneReservationServic
 		}
 		
 		return null;
+	}
+
+	@Override
+	public List<Flight> getAllFlights() {
+		return flightRepository.findAll();
+	}
+
+	@Override
+	public List<AmericanAirlines> getAllAmericanAirlines() {
+		return aaRepository.findAll();
+	}
+
+	@Override
+	public List<Airplanes> getAllAirplanes() {
+		return airplanesRepository.findAll();
 	}
 
 }

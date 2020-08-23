@@ -27,24 +27,30 @@
 			width="600" height="400" alt="Logo" />
 				<form th:action="@{/americanairlines}" th:object="${americanairlinesObj}" method="post">
 			
-						<div class="form-group">
-                            <label for="Username"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                            <input type="text" name="username" id="username" placeholder="username"/>
-                        </div>
-                        <div class="form-group">
-                            <label for="password"><i class="zmdi zmdi-lock"></i></label>
-                            <input type="password" name="password" id="password" placeholder="Password"/>
-                        </div>
-                        
-                        <div align = "center" th:if= "${param.error}">
-                        	<p style ="font-size:25; color: #FF1C19;">Customer name or password invalid, please enter correct details!  </p>
-                        </div>
+					<table border="1" class="table table-striped table-responsive-md">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Code</th>
+								<th>Name</th>
+								<th>Details</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="americanAirlines : ${americanairlinesObj}">
+								<td th:text="${americanAirlines.id}"></td>
+								<td th:text="${americanAirlines.code}"></td>
+								<td th:text="${americanAirlines.name}"></td>
+								<td th:text="${americanAirlines.details}"></td>
+							</tr>
+						</tbody>
+					</table>
                         
 					<div class="form-group">
 						<div class="row">
 							<div class="col-sm-6 col-sm-offset-3">
 								<input type="submit" name="login-submit" id="login-submit"
-									class="form-control btn btn-primary" value="Log In" />
+									class="form-control btn btn-primary" value="Add American Airlines" />
 							</div>
 						</div>
 					</div>
