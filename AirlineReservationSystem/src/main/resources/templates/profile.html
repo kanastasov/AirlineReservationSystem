@@ -27,24 +27,33 @@
 			width="500" height="350" alt="Logo" />
 				<form th:action="@{/profile}" th:object="${profileObj}" method="post">
 			
-						<div class="form-group">
-                            <label for="Username"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                            <input type="text" name="username" id="username" placeholder="username"/>
-                        </div>
-                        <div class="form-group">
-                            <label for="password"><i class="zmdi zmdi-lock"></i></label>
-                            <input type="password" name="password" id="password" placeholder="Password"/>
-                        </div>
+			<table border="1" class="table table-striped table-responsive-md">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>email</th>
+								<th>first Name</th>
+								<th>last Name</th>
+								<th>user Name</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="profile : ${profileObj}">
+								<td th:text="${profile.id}"></td>
+								<td th:text="${profile.email}"></td>
+								<td th:text="${profile.firstName}"></td>
+								<td th:text="${profile.lastName}"></td>
+								<td th:text="${profile.username}"></td>
+							</tr>
+						</tbody>
+					</table>
                         
-                        <div align = "center" th:if= "${param.error}">
-                        	<p style ="font-size:25; color: #FF1C19;">Customer name or password invalid, please enter correct details!  </p>
-                        </div>
                         
 					<div class="form-group">
 						<div class="row">
 							<div class="col-sm-6 col-sm-offset-3">
 								<input type="submit" name="login-submit" id="login-submit"
-									class="form-control btn btn-primary" value="Log In" />
+									class="form-control btn btn-primary" value="Add Profile" />
 							</div>
 						</div>
 					</div>

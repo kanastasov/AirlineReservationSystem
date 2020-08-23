@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
+import com.kirilanastasoff.ars.model.airplane.Airplanes;
 import com.kirilanastasoff.ars.model.airplane.AmericanAirlines;
 import com.kirilanastasoff.ars.model.airplane.Flight;
 import com.kirilanastasoff.ars.model.airplane.FlightSchedule;
@@ -21,11 +22,13 @@ public interface AirplaneReservationService {
 	AmericanAirlines getAmericanAirlines(Customer customer);
 	AmericanAirlines addAmericanAirlines(AmericanAirlines americanAirlines);
 	AmericanAirlines updateAmericanAirlines(AmericanAirlines americanAirlines, Flight flight);
+	List<AmericanAirlines> getAllAmericanAirlines();
 	
 	//Flight related methods
 	Flight getFlightById(Long id);
 	List<Flight> addFlight(Flight flight);
 	List<Flight> getAvailableFlightBetweenStops(String sourceStopCode, String destinationStopCode);
+	List<Flight> getAllFlights();
 	
 	//FlightSchedule
 	List<FlightSchedule> getAvailableFlightSchedules(String sourceStopCode, String destinationStopCode, LocalDate flightDate);
@@ -33,5 +36,8 @@ public interface AirplaneReservationService {
 	
 	//Ticket related methods
 	Ticket bookTicket(FlightSchedule flightSchedule, Customer customer);
+	
+	//Airplanes related methods
+	List<Airplanes> getAllAirplanes();
 	
 }

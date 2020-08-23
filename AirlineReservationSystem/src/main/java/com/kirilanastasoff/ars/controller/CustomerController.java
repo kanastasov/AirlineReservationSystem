@@ -49,7 +49,6 @@ public class CustomerController {
 	@Autowired
 	private PdfService pdfService;
 	
-	
 	@Autowired
 	private AirplaneReservationService airplaneReservationService;
 	
@@ -162,7 +161,7 @@ public class CustomerController {
 			username = principal.toString();
 		}
 		
-		modelAndView.addObject("flightObj", "Welcome " + username);
+		modelAndView.addObject("flightObj", airplaneReservationService.getAllFlights());
 		modelAndView.setViewName("flight");
 //		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 //		Customer customer = customerService.findByEmail(auth.getName());
@@ -176,6 +175,7 @@ public class CustomerController {
 	@PostMapping("/flight")
 	public ModelAndView addFlight(@Valid @ModelAttribute("customerObjData") BindingResult bindingResult) {
 		ModelAndView modelAndView = new ModelAndView("flight");
+		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		Customer customer = customerService.findByEmail(auth.getName());
 		AmericanAirlines americanAirlines = airplaneReservationService.getAmericanAirlines(customer);
@@ -188,6 +188,7 @@ public class CustomerController {
 			AmericanAirlines updateAirlines = airplaneReservationService.updateAmericanAirlines(americanAirlines, flight);
 			modelAndView.addObject("flightObjData", customer);
 			modelAndView.addObject("americanAirlinesObjData", updateAirlines);
+			
 		}
 		modelAndView.setViewName("redirect:/");
 		return modelAndView;
@@ -205,7 +206,7 @@ public class CustomerController {
 			username = principal.toString();
 		}
 		
-		modelAndView.addObject("airplaneObj", "Welcome " + username);
+		modelAndView.addObject("airplaneObj", airplaneReservationService.getAllAirplanes());
 		modelAndView.setViewName("airplane");
 		return modelAndView;
 	}
@@ -222,7 +223,7 @@ public class CustomerController {
 			username = principal.toString();
 		}
 		
-		modelAndView.addObject("americanairlinesObj", "Welcome " + username);
+		modelAndView.addObject("americanairlinesObj", airplaneReservationService.getAllAmericanAirlines());
 		modelAndView.setViewName("americanairlines");
 		return modelAndView;
 	}
@@ -241,7 +242,7 @@ public class CustomerController {
 			username = principal.toString();
 		}
 		
-		modelAndView.addObject("profileObj", "Welcome " + username);
+		modelAndView.addObject("profileObj", customerService.findByEmail("add@gmail.com"));
 		modelAndView.setViewName("profile");
 		return modelAndView;
 	}

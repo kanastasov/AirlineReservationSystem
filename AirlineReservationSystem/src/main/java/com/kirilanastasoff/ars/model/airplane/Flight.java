@@ -28,7 +28,7 @@ public class Flight {
 	@Column(name = "id")
 	private Long id;
 	
-	@Column(name = "face")
+	@Column(name = "fare")
 	private int fare;
 	
 	@Column(name = "journey_time")
