@@ -31,8 +31,8 @@ import lombok.NoArgsConstructor;
 public class AmericanAirlines {
 
 	@Id
-	@GeneratedValue(strategy= GenerationType.AUTO)
-	@Column(name = "id")
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	@Column(name = "id", updatable = false, nullable = false)
 	private Long id;
 	
 	@Column(name = "code")
@@ -49,9 +49,17 @@ public class AmericanAirlines {
 	private Customer customer;
 	
 //	@Column(name = "list_of_airplanes")
-//	@OneToMany(cascade = CascadeType.MERGE)
-//    @JoinTable(name = "american_airlines_airplanes", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "id"))
-	@Transient
-	private List<Airplanes> listOfAirplanes = new ArrayList<>();;
+	@OneToMany(targetEntity = Airplanes.class, mappedBy = "americanAirlines", cascade =CascadeType.ALL)
+	private List<Airplanes> listOfAirplanes = new ArrayList<>();
+	
+	public void addAirplanes(Airplanes airplane) {
+		listOfAirplanes.add(airplane);
+		airplane.setAmericanAirlines(this);
+	}
+	
+	public void removeAirplanes(Airplanes airplane) {
+		listOfAirplanes.remove(airplane);
+		airplane.setAmericanAirlines(null);
+	}
 	
 }

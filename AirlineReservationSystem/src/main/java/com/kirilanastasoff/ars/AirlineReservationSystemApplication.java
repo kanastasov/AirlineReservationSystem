@@ -11,7 +11,9 @@ import org.springframework.context.annotation.Bean;
 import com.kirilanastasoff.ars.model.airplane.Airplanes;
 import com.kirilanastasoff.ars.model.airplane.AmericanAirlines;
 import com.kirilanastasoff.ars.model.airplane.Flight;
+import com.kirilanastasoff.ars.model.airplane.FlightSchedule;
 import com.kirilanastasoff.ars.model.airplane.Stop;
+import com.kirilanastasoff.ars.model.airplane.Ticket;
 import com.kirilanastasoff.ars.model.customer.Customer;
 import com.kirilanastasoff.ars.repository.airplane.AirplanesRepository;
 import com.kirilanastasoff.ars.repository.airplane.AmericanAirlinesRepository;
@@ -63,15 +65,6 @@ public class AirlineReservationSystemApplication {
 				flightRepository.save(tempFlight);
 			}
 			
-			Airplanes airplane = airplanesRepository.findByCode("code20");
-			if(airplane == null) {
-				airplane = new Airplanes();
-				airplane.setCapacity(120);
-				airplane.setCode("code20");
-				airplane.setMake("Transport airplane average size");
-				airplanesRepository.save(airplane);
-			}
-			
 			
 			AmericanAirlines americanAirlines = americanAirlinesRepository.findByName("airlines name");
 			if(americanAirlines == null) {
@@ -79,9 +72,32 @@ public class AirlineReservationSystemApplication {
 				americanAirlines.setCode("codeAA");
 				americanAirlines.setDetails("New American Airlines");
 				americanAirlines.setName("airlines name");
-				americanAirlinesRepository.save(americanAirlines);
+			
 			}
 			
+			Airplanes airplane = airplanesRepository.findByCode("code20");
+			if(airplane == null) {
+				airplane = new Airplanes();
+				airplane.setCapacity(120);
+				airplane.setCode("code20");
+				airplane.setMake("Transport airplane average size");
+				americanAirlines.addAirplanes(airplane);
+//				airplanesRepository.save(airplane);
+			}
+			
+			Airplanes airplane2 = airplanesRepository.findByCode("code60");
+			if(airplane2 == null) {
+				airplane2 = new Airplanes();
+				airplane2.setCapacity(120);
+				airplane2.setCode("code60");
+				airplane2.setMake("Model");
+				americanAirlines.addAirplanes(airplane2);
+//				airplanesRepository.save(airplane);
+			}
+			
+			americanAirlines.getListOfAirplanes().add(airplane);
+			americanAirlines.getListOfAirplanes().add(airplane2);
+			americanAirlinesRepository.save(americanAirlines);
 			
 			Customer customer = customerRepository.findByEmail("add@gmail.com");
 			if(customer == null) {
@@ -93,6 +109,25 @@ public class AirlineReservationSystemApplication {
 				customer.setPassword("password");
 				customerRepository.save(customer);
 			}
+			FlightSchedule tempFlightSchedule = new FlightSchedule();;
+			Optional<FlightSchedule> flightSchedule = flightScheduleRepository.findById(111l);
+			if(!flightSchedule.isPresent()) {
+				tempFlightSchedule.setAvailableSeats(120);
+			}
+			
+			Ticket tempTicket = new Ticket();
+			Optional<Ticket> ticket = ticketRepository.findById(111l);
+			
+			if(!ticket.isPresent()) {
+				tempTicket.setCancellable(false);
+				tempTicket.setSeatNumber(120);
+				tempFlightSchedule.addTicket(tempTicket);
+			}
+			tempFlightSchedule.getTicketsSold().add(tempTicket);
+			
+			flightScheduleRepository.save(tempFlightSchedule);
+			
+			
 			
 		};
 	}

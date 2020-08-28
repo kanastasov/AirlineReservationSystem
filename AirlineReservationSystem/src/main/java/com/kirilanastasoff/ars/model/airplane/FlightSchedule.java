@@ -42,10 +42,16 @@ public class FlightSchedule {
 	@Column(name = "available_seats")
 	private int availableSeats;
 	
-
-//	@Column(name = "tickets_sold")
-//	@OneToMany(cascade = CascadeType.MERGE)
-//    @JoinTable(name = "flight_schedule_tickets", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "id"))
-	@Transient
+	@OneToMany(targetEntity = Ticket.class, mappedBy = "flightSchedule", cascade = CascadeType.ALL)
 	private List<Ticket> ticketsSold = new ArrayList<>();
+	
+	public void addTicket(Ticket ticket) {
+		ticketsSold.add(ticket);
+		ticket.setFlightSchedule(this);
+	}
+	
+	public void removeTicket(Ticket ticket) {
+		ticketsSold.remove(ticket);
+		ticket.setFlightSchedule(null);
+	}
 }
