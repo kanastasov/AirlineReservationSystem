@@ -42,7 +42,6 @@ public class AirlineReservationSystemApplication {
 				stopBerlin.setName("Stop Berlin");
 				stopBerlin.setDetail("Western Europe Stop in Germany");
 				stopBerlin.setCode("stopBerlin");
-				stopRepository.save(stopBerlin);
 			}
 			
 			Stop stopParis = stopRepository.findByCode("stopParis");
@@ -51,53 +50,23 @@ public class AirlineReservationSystemApplication {
 				stopParis.setName("Stop Berlin");
 				stopParis.setDetail("Western Europe Stop in France");
 				stopParis.setCode("stopParis");
-				stopRepository.save(stopParis);
+			
 			}
 			
-			
+			Flight tempFlight = null;
 			Optional<Flight> flight = flightRepository.findById(1l);
-			if(flight.isEmpty()) {
-				Flight tempFlight = new Flight();
+			if(!flight.isPresent()) {
+				tempFlight = new Flight();
 				tempFlight.setFare(20);
 				tempFlight.setJourneyTime(70);
 				tempFlight.setDestStop(stopBerlin);
 				tempFlight.setSourceStop(stopParis);
-				flightRepository.save(tempFlight);
+				stopBerlin.addFlight(tempFlight);
+				stopParis.addFlight(tempFlight);
 			}
 			
-			
-			AmericanAirlines americanAirlines = americanAirlinesRepository.findByName("airlines name");
-			if(americanAirlines == null) {
-				americanAirlines = new AmericanAirlines();
-				americanAirlines.setCode("codeAA");
-				americanAirlines.setDetails("New American Airlines");
-				americanAirlines.setName("airlines name");
-			
-			}
-			
-			Airplanes airplane = airplanesRepository.findByCode("code20");
-			if(airplane == null) {
-				airplane = new Airplanes();
-				airplane.setCapacity(120);
-				airplane.setCode("code20");
-				airplane.setMake("Transport airplane average size");
-				americanAirlines.addAirplanes(airplane);
-//				airplanesRepository.save(airplane);
-			}
-			
-			Airplanes airplane2 = airplanesRepository.findByCode("code60");
-			if(airplane2 == null) {
-				airplane2 = new Airplanes();
-				airplane2.setCapacity(120);
-				airplane2.setCode("code60");
-				airplane2.setMake("Model");
-				americanAirlines.addAirplanes(airplane2);
-//				airplanesRepository.save(airplane);
-			}
-			
-			americanAirlines.getListOfAirplanes().add(airplane);
-			americanAirlines.getListOfAirplanes().add(airplane2);
-			americanAirlinesRepository.save(americanAirlines);
+			stopRepository.save(stopParis);
+			stopRepository.save(stopBerlin);
 			
 			Customer customer = customerRepository.findByEmail("add@gmail.com");
 			if(customer == null) {
@@ -107,8 +76,43 @@ public class AirlineReservationSystemApplication {
 				customer.setLastName("customer");
 				customer.setUsername("admin");
 				customer.setPassword("password");
-				customerRepository.save(customer);
 			}
+			
+			
+			AmericanAirlines americanAirlines = americanAirlinesRepository.findByName("airlines name");
+			if(americanAirlines == null) {
+				americanAirlines = new AmericanAirlines();
+				americanAirlines.setCode("codeAA");
+				americanAirlines.setDetails("New American Airlines");
+				americanAirlines.setName("airlines name");
+				americanAirlines.setCustomer(customer);
+				americanAirlines.setFlight(tempFlight);
+			}
+			
+			Airplanes airplane = airplanesRepository.findByCode("code20");
+			if(airplane == null) {
+				airplane = new Airplanes();
+				airplane.setCapacity(120);
+				airplane.setCode("code20");
+				airplane.setMake("Transport airplane average size");
+				americanAirlines.addAirplanes(airplane);
+			}
+			
+			Airplanes airplane2 = airplanesRepository.findByCode("code60");
+			if(airplane2 == null) {
+				airplane2 = new Airplanes();
+				airplane2.setCapacity(120);
+				airplane2.setCode("code60");
+				airplane2.setMake("Model");
+				americanAirlines.addAirplanes(airplane2);
+			}
+			
+			americanAirlines.getListOfAirplanes().add(airplane);
+			americanAirlines.getListOfAirplanes().add(airplane2);
+			
+			customer.addAmericanAirlines(americanAirlines);
+			
+			
 			FlightSchedule tempFlightSchedule = new FlightSchedule();;
 			Optional<FlightSchedule> flightSchedule = flightScheduleRepository.findById(111l);
 			if(!flightSchedule.isPresent()) {
@@ -122,12 +126,18 @@ public class AirlineReservationSystemApplication {
 				tempTicket.setCancellable(false);
 				tempTicket.setSeatNumber(120);
 				tempFlightSchedule.addTicket(tempTicket);
+				tempTicket.setCustomer(customer);
 			}
+			
+			
+			
+			customer.addTicket(tempTicket);
 			tempFlightSchedule.getTicketsSold().add(tempTicket);
 			
 			flightScheduleRepository.save(tempFlightSchedule);
 			
 			
+			customerRepository.save(customer);
 			
 		};
 	}

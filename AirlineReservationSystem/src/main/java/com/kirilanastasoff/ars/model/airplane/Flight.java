@@ -8,7 +8,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -24,7 +26,7 @@ import lombok.NoArgsConstructor;
 public class Flight {
 
 	@Id
-	@GeneratedValue(strategy= GenerationType.AUTO)
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long id;
 	
@@ -34,21 +36,25 @@ public class Flight {
 	@Column(name = "journey_time")
 	private int journeyTime;
 	
-//	@Column(name = "airplanes")
-	@Transient
+	@OneToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name = "airplanes_id", referencedColumnName = "id")
 	private Airplanes airplanes;
 	
-//	@Column(name = "american_airlines")
-	@Transient
+	@OneToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name = "american_airlines_id", referencedColumnName = "id")
 	private AmericanAirlines americanAirlines;
 	
-//	@Column(name = "source_stop")
-	@Transient
+	@OneToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name = "source_stop_id", referencedColumnName = "id")
 	private Stop sourceStop;
 	
-//	@Column(name = "dest_stop")
-	@Transient
+	@OneToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name = "dest_stop_id", referencedColumnName = "id")
 	private Stop destStop;
+	
+	@OneToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name = "flight_schedule_id", referencedColumnName = "id")
+	private FlightSchedule flightShcedule;
 	
 	
 	

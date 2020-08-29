@@ -1,11 +1,14 @@
 package com.kirilanastasoff.ars.model.airplane;
 
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -21,7 +24,7 @@ import lombok.NoArgsConstructor;
 public class Stop {
 
 	@Id
-	@GeneratedValue(strategy= GenerationType.AUTO)
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long id;
 	
@@ -33,4 +36,13 @@ public class Stop {
 	
 	@Column(name = "detail")
 	private String detail;
+	
+	@OneToOne(targetEntity = Flight.class, mappedBy = "sourceStop", cascade =CascadeType.ALL)
+	private Flight flight;
+	
+	public void addFlight(Flight flight) {
+		this.flight = flight;
+		flight.setSourceStop(this);
+	}
+	
 }

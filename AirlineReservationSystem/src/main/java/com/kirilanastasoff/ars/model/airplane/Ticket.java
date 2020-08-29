@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -30,7 +31,7 @@ import lombok.NoArgsConstructor;
 public class Ticket {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long id;
 
@@ -43,8 +44,8 @@ public class Ticket {
 	@Column(name = "journey_date")
 	private LocalDate journeyDate;
 	
-//	@Column(name = "customer")
-	@Transient
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "customer_id", referencedColumnName = "id")
 	private Customer customer;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
