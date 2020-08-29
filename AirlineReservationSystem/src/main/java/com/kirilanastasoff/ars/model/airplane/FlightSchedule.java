@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.JoinColumn;
@@ -28,12 +29,11 @@ import lombok.NoArgsConstructor;
 public class FlightSchedule {
 
 	@Id
-	@GeneratedValue(strategy= GenerationType.AUTO)
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long id;
 	
-//	@Column(name = "flight")
-	@Transient
+	@OneToOne(targetEntity = Flight.class, mappedBy = "flightShcedule", cascade =CascadeType.ALL)
 	private Flight flight;
 	
 	@Column(name = "trip_date")
@@ -53,5 +53,10 @@ public class FlightSchedule {
 	public void removeTicket(Ticket ticket) {
 		ticketsSold.remove(ticket);
 		ticket.setFlightSchedule(null);
+	}
+	
+	public void addFlight(Flight flight) {
+		this.flight = flight;
+		flight.setFlightShcedule(this);
 	}
 }

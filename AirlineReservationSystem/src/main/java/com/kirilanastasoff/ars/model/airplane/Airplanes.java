@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -41,4 +43,13 @@ public class Airplanes {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "american_airlines_id", referencedColumnName = "id")
 	private AmericanAirlines americanAirlines;
+	
+	@OneToOne(targetEntity = Flight.class, mappedBy = "airplanes", cascade =CascadeType.ALL)
+	private Flight flight;
+	
+	public void addFlight(Flight flight) {
+		this.flight = flight;
+		flight.setAirplanes(this);
+	}
+	
 }

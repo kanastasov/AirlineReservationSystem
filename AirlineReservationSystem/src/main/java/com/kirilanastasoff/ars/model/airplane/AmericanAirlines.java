@@ -13,7 +13,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -44,13 +46,15 @@ public class AmericanAirlines {
 	@Column(name = "details")
 	private String details;
 	
-	@Column(name = "customer")
-	@Transient
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "customer_id", referencedColumnName = "id")
 	private Customer customer;
 	
-//	@Column(name = "list_of_airplanes")
 	@OneToMany(targetEntity = Airplanes.class, mappedBy = "americanAirlines", cascade =CascadeType.ALL)
 	private List<Airplanes> listOfAirplanes = new ArrayList<>();
+	
+	@OneToOne(targetEntity = Flight.class, mappedBy = "americanAirlines", cascade =CascadeType.ALL)
+	private Flight flight;
 	
 	public void addAirplanes(Airplanes airplane) {
 		listOfAirplanes.add(airplane);
@@ -60,6 +64,11 @@ public class AmericanAirlines {
 	public void removeAirplanes(Airplanes airplane) {
 		listOfAirplanes.remove(airplane);
 		airplane.setAmericanAirlines(null);
+	}
+	
+	public void addFlight(Flight flight) {
+		this.flight = flight;
+		flight.setAmericanAirlines(this);
 	}
 	
 }

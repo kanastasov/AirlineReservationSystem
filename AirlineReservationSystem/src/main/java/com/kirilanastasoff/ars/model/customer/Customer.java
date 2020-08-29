@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -19,6 +21,10 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Length;
 import org.springframework.lang.NonNull;
+
+import com.kirilanastasoff.ars.model.airplane.Airplanes;
+import com.kirilanastasoff.ars.model.airplane.AmericanAirlines;
+import com.kirilanastasoff.ars.model.airplane.Ticket;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -67,4 +73,33 @@ public class Customer {
 	@Length(min = 5, message = "Your username need to be at least 5 characters")
 	@Column(name = "username")
 	private String username;
+	
+	@OneToOne(targetEntity = AmericanAirlines.class, mappedBy = "customer", cascade =CascadeType.ALL)
+	private AmericanAirlines americanAirlines;
+	
+	@OneToOne(targetEntity = Ticket.class, mappedBy = "customer", cascade =CascadeType.ALL)
+	private Ticket ticket;
+	
+	
+	public void addAmericanAirlines(AmericanAirlines americanAirlines) {
+		this.americanAirlines = americanAirlines;
+		americanAirlines.setCustomer(this);
+	}
+	
+	public void removeAmericanAirlines(AmericanAirlines airplane) {
+		this.americanAirlines = null;
+		americanAirlines.setCustomer(null);
+	}
+	
+	public void addTicket(Ticket ticket) {
+		this.ticket = ticket;
+		ticket.setCustomer(this);
+	}
+	
+	public void removeTicket(Ticket ticket) {
+		this.ticket = null;
+		ticket.setCustomer(null);
+	}
+	
+	
 }
