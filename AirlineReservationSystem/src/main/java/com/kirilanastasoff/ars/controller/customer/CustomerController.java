@@ -1,4 +1,4 @@
-package com.kirilanastasoff.ars.controller;
+package com.kirilanastasoff.ars.controller.customer;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -51,30 +51,7 @@ public class CustomerController {
 	private CustomerService customerService;
 
 	@Autowired
-	private BCryptPasswordEncoder bcrypt;
-
-	@Autowired
 	private PdfService pdfService;
-
-	@Autowired
-	private AirplanesService airplaneService;
-	
-	@Autowired
-	private AmericanAirlinesService americanAirlinesService;
-	
-	@Autowired
-	private FlightScheduleService flightScheduleService;
-	
-	@Autowired
-	private FlightService flightService;
-	
-	@Autowired
-	private StopService stopService;
-	
-	@Autowired
-	private TicketService ticketService;
-	
-	
 
 	@GetMapping("/")
 	public String showAllCustomers(Model model) {
@@ -171,108 +148,5 @@ public class CustomerController {
 
 	}
 
-	@GetMapping("/flight")
-	public ModelAndView flightDetails() {
-		ModelAndView modelAndView = new ModelAndView("flight");
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String username = "";
-
-		if (principal instanceof UserDetails) {
-			username = ((UserDetails) principal).getUsername();
-		} else {
-			username = principal.toString();
-		}
-
-		modelAndView.addObject("flightObj", flightService.getAllFlights());
-		modelAndView.setViewName("flight");
-//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//		Customer customer = customerService.findByEmail(auth.getName());
-//		AmericanAirlines americanAirlines = airplaneService.getAmericanAirlines(customer);
-//		
-//		modelAndView.addObject("customerObjData", customer);
-//		modelAndView.addObject("americanAirlinesObjData", americanAirlines);
-		return modelAndView;
-	}
-
-	@PostMapping("/flight")
-	public ModelAndView addFlight(@Valid @ModelAttribute("customerObjData") BindingResult bindingResult) {
-		ModelAndView modelAndView = new ModelAndView("flight");
-
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		Customer customer = customerService.findByEmail(auth.getName());
-		AmericanAirlines americanAirlines = americanAirlinesService.getAmericanAirlines(customer);
-		modelAndView.addObject("customerObjData", customer);
-		modelAndView.addObject("americanAirlinesObjData", americanAirlines);
-
-		if (!bindingResult.hasErrors()) {
-			Flight flight = new Flight();
-			flight.setAmericanAirlines(americanAirlines);
-			AmericanAirlines updateAirlines = americanAirlinesService.updateAmericanAirlines(americanAirlines,
-					flight);
-			modelAndView.addObject("flightObjData", customer);
-			modelAndView.addObject("americanAirlinesObjData", updateAirlines);
-
-		}
-		modelAndView.setViewName("redirect:/");
-		return modelAndView;
-	}
-
-	@GetMapping("/airplane")
-	public ModelAndView airplaneDetails() {
-		ModelAndView modelAndView = new ModelAndView("airplane");
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String username = "";
-
-		if (principal instanceof UserDetails) {
-			username = ((UserDetails) principal).getUsername();
-		} else {
-			username = principal.toString();
-		}
-
-		modelAndView.addObject("airplaneObj", airplaneService.getAllAirplanes());
-		modelAndView.setViewName("airplane");
-		return modelAndView;
-	}
-
-	@GetMapping("/americanairlines")
-	public ModelAndView americanAirlinesDetails() {
-		ModelAndView modelAndView = new ModelAndView("americanairlines");
-		List<AmericanAirlines> tempAAList = americanAirlinesService.getQueryAmericanAirlines();
-		TempResponse tempResponse = null;
-		List<TempResponse> tempResponseList = new ArrayList<>();
-
-		for (int i = 0; i < tempAAList.size(); i++) {
-			tempResponse = new TempResponse();
-			tempResponse.setAaId(tempAAList.get(i).getAaId());
-			tempResponse.setAaCode(tempAAList.get(i).getAaCode());
-			tempResponse.setName(tempAAList.get(i).getName());
-			tempResponse.setDetails(tempAAList.get(i).getDetails());
-			tempResponse.setMake(tempAAList.get(i).getListOfAirplanes().get(i).getMake());
-			tempResponse.setAId(tempAAList.get(i).getListOfAirplanes().get(i).getAId());
-			tempResponse.setCapacity(tempAAList.get(i).getListOfAirplanes().get(i).getCapacity());
-			tempResponseList.add(tempResponse);
-		}
-
-		modelAndView.addObject("americanairlinesObj", tempResponseList);
-		modelAndView.setViewName("americanairlines");
-		return modelAndView;
-	}
-
-	@GetMapping("/profile")
-	public ModelAndView profileDetails() {
-		ModelAndView modelAndView = new ModelAndView("profile");
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String username = "";
-
-		if (principal instanceof UserDetails) {
-			username = ((UserDetails) principal).getUsername();
-		} else {
-			username = principal.toString();
-		}
-
-		modelAndView.addObject("profileObj", customerService.findByEmail("add@gmail.com"));
-		modelAndView.setViewName("profile");
-		return modelAndView;
-	}
 
 }

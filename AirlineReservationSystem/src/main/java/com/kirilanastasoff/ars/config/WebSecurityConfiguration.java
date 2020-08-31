@@ -34,10 +34,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		String logoutPage = "/logout";
 
 		http.authorizeRequests()
-		.antMatchers("/").permitAll()
+//		.antMatchers("/").permitAll()
 		.antMatchers(loginPage).permitAll()
-		.antMatchers("/**").permitAll()
-		.antMatchers("/login").permitAll()
+//		.antMatchers("/**").permitAll()
+		.antMatchers("/showCustomerForm").permitAll()
 		.antMatchers("/register").permitAll()
 		.antMatchers("/admin/**").hasAuthority("ADMIN")
 				.anyRequest().authenticated().and().csrf().disable().formLogin().loginPage(loginPage).loginPage("/")
