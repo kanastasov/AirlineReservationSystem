@@ -37,18 +37,18 @@ public class Flight {
 	private int journeyTime;
 	
 	@OneToOne(cascade = CascadeType.MERGE)
-	@JoinColumn(name = "airplanes_id", referencedColumnName = "id")
+	@JoinColumn(name = "airplanes_id", referencedColumnName = "a_id")
 	private Airplanes airplanes;
 	
 	@OneToOne(cascade = CascadeType.MERGE)
-	@JoinColumn(name = "american_airlines_id", referencedColumnName = "id")
+	@JoinColumn(name = "american_airlines_id", referencedColumnName = "aa_id")
 	private AmericanAirlines americanAirlines;
 	
-	@OneToOne(cascade = CascadeType.MERGE)
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "source_stop_id", referencedColumnName = "id")
 	private Stop sourceStop;
 	
-	@OneToOne(cascade = CascadeType.MERGE)
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "dest_stop_id", referencedColumnName = "id")
 	private Stop destStop;
 	

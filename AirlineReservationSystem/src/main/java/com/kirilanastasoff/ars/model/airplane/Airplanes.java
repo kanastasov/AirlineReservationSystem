@@ -28,11 +28,11 @@ public class Airplanes {
 
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	@Column(name = "id")
-	private Long id;
+	@Column(name = "a_id")
+	private Long aId;
 	
-	@Column(name = "code")
-	private String code;
+	@Column(name = "a_code")
+	private String aCode;
 	
 	@Column(name = "capacity")
 	private int capacity;
@@ -41,7 +41,7 @@ public class Airplanes {
 	private String make;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "american_airlines_id", referencedColumnName = "id")
+	@JoinColumn(name = "american_airlines_id", referencedColumnName = "aa_id")
 	private AmericanAirlines americanAirlines;
 	
 	@OneToOne(targetEntity = Flight.class, mappedBy = "airplanes", cascade =CascadeType.ALL)

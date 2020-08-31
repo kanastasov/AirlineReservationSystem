@@ -34,11 +34,11 @@ public class AmericanAirlines {
 
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	@Column(name = "id", updatable = false, nullable = false)
-	private Long id;
+	@Column(name = "aa_id", updatable = false, nullable = false)
+	private Long aaId;
 	
-	@Column(name = "code")
-	private String code;
+	@Column(name = "aa_Code")
+	private String aaCode;
 	
 	@Column(name = "name")
 	private String name;

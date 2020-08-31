@@ -13,7 +13,7 @@
 <title>Airline Registration System</title>
 </head>
 <body>
-<div th:replace="fragments/header.html :: myheader"></div>
+	<div th:replace="fragments/header.html :: myheader"></div>
 
 
 	<br>
@@ -23,10 +23,12 @@
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
 				<h1>American Airlines page</h1>
-					<img th:src="@{/images/americanairlines.jpg}" class="img-responsive center-block"
-			width="600" height="400" alt="Logo" />
-				<form th:action="@{/americanairlines}" th:object="${americanairlinesObj}" method="post">
-			
+				<img th:src="@{/images/americanairlines.jpg}"
+					class="img-responsive center-block" width="600" height="400"
+					alt="Logo" />
+				<form th:action="@{/americanairlines}"
+					th:object="${americanairlinesObj}" method="post">
+
 					<table border="1" class="table table-striped table-responsive-md">
 						<thead>
 							<tr>
@@ -34,25 +36,31 @@
 								<th>Code</th>
 								<th>Name</th>
 								<th>Details</th>
-							
+								<th>Airplane id:</th>
+								<th>Airplane make:</th>
+								<th>Airplane capacity:</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr th:each="americanAirlines : ${americanairlinesObj}">
-								<td th:text="${americanAirlines.id}"></td>
-								<td th:text="${americanAirlines.code}"></td>
+								<td th:text="${americanAirlines.aaId}"></td>
+								<td th:text="${americanAirlines.aaCode}"></td>
 								<td th:text="${americanAirlines.name}"></td>
 								<td th:text="${americanAirlines.details}"></td>
-							  
+								<td th:text="${americanAirlines.aId}"></td>
+								<td th:text="${americanAirlines.make}"></td>
+								<td th:text="${americanAirlines.capacity}"></td>
+
 							</tr>
 						</tbody>
 					</table>
-                        
+
 					<div class="form-group">
 						<div class="row">
 							<div class="col-sm-6 col-sm-offset-3">
 								<input type="submit" name="login-submit" id="login-submit"
-									class="form-control btn btn-primary" value="Add American Airlines" />
+									class="form-control btn btn-primary"
+									value="Add American Airlines" />
 							</div>
 						</div>
 					</div>
@@ -67,6 +75,6 @@
 		th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
 	<script type="text/javascript"
 		th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
-		<div th:replace="fragments/footer.html :: myfooter"></div>
+	<div th:replace="fragments/footer.html :: myfooter"></div>
 </body>
-</html> 
+</html>
