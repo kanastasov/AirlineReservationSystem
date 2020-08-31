@@ -28,7 +28,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.kirilanastasoff.ars.airplane.service.AirplaneReservationService;
+import com.kirilanastasoff.ars.airplane.service.AirplanesService;
+import com.kirilanastasoff.ars.airplane.service.AmericanAirlinesService;
+import com.kirilanastasoff.ars.airplane.service.FlightScheduleService;
+import com.kirilanastasoff.ars.airplane.service.FlightService;
+import com.kirilanastasoff.ars.airplane.service.StopService;
+import com.kirilanastasoff.ars.airplane.service.TicketService;
 import com.kirilanastasoff.ars.customer.service.CustomerService;
 import com.kirilanastasoff.ars.customer.service.PdfService;
 import com.kirilanastasoff.ars.exceptions.CustomerException;
@@ -52,7 +57,24 @@ public class CustomerController {
 	private PdfService pdfService;
 
 	@Autowired
-	private AirplaneReservationService airplaneReservationService;
+	private AirplanesService airplaneService;
+	
+	@Autowired
+	private AmericanAirlinesService americanAirlinesService;
+	
+	@Autowired
+	private FlightScheduleService flightScheduleService;
+	
+	@Autowired
+	private FlightService flightService;
+	
+	@Autowired
+	private StopService stopService;
+	
+	@Autowired
+	private TicketService ticketService;
+	
+	
 
 	@GetMapping("/")
 	public String showAllCustomers(Model model) {
@@ -161,11 +183,11 @@ public class CustomerController {
 			username = principal.toString();
 		}
 
-		modelAndView.addObject("flightObj", airplaneReservationService.getAllFlights());
+		modelAndView.addObject("flightObj", flightService.getAllFlights());
 		modelAndView.setViewName("flight");
 //		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 //		Customer customer = customerService.findByEmail(auth.getName());
-//		AmericanAirlines americanAirlines = airplaneReservationService.getAmericanAirlines(customer);
+//		AmericanAirlines americanAirlines = airplaneService.getAmericanAirlines(customer);
 //		
 //		modelAndView.addObject("customerObjData", customer);
 //		modelAndView.addObject("americanAirlinesObjData", americanAirlines);
@@ -178,14 +200,14 @@ public class CustomerController {
 
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		Customer customer = customerService.findByEmail(auth.getName());
-		AmericanAirlines americanAirlines = airplaneReservationService.getAmericanAirlines(customer);
+		AmericanAirlines americanAirlines = americanAirlinesService.getAmericanAirlines(customer);
 		modelAndView.addObject("customerObjData", customer);
 		modelAndView.addObject("americanAirlinesObjData", americanAirlines);
 
 		if (!bindingResult.hasErrors()) {
 			Flight flight = new Flight();
 			flight.setAmericanAirlines(americanAirlines);
-			AmericanAirlines updateAirlines = airplaneReservationService.updateAmericanAirlines(americanAirlines,
+			AmericanAirlines updateAirlines = americanAirlinesService.updateAmericanAirlines(americanAirlines,
 					flight);
 			modelAndView.addObject("flightObjData", customer);
 			modelAndView.addObject("americanAirlinesObjData", updateAirlines);
@@ -207,7 +229,7 @@ public class CustomerController {
 			username = principal.toString();
 		}
 
-		modelAndView.addObject("airplaneObj", airplaneReservationService.getAllAirplanes());
+		modelAndView.addObject("airplaneObj", airplaneService.getAllAirplanes());
 		modelAndView.setViewName("airplane");
 		return modelAndView;
 	}
@@ -215,7 +237,7 @@ public class CustomerController {
 	@GetMapping("/americanairlines")
 	public ModelAndView americanAirlinesDetails() {
 		ModelAndView modelAndView = new ModelAndView("americanairlines");
-		List<AmericanAirlines> tempAAList = airplaneReservationService.getQueryAmericanAirlines();
+		List<AmericanAirlines> tempAAList = americanAirlinesService.getQueryAmericanAirlines();
 		TempResponse tempResponse = null;
 		List<TempResponse> tempResponseList = new ArrayList<>();
 

@@ -86,7 +86,7 @@ public class AirlineReservationSystemApplication {
 				americanAirlines.setDetails("New American Airlines");
 				americanAirlines.setName("airlines name");
 				americanAirlines.setCustomer(customer);
-				americanAirlines.setFlight(tempFlight);
+//				americanAirlines.setFlight(tempFlight);
 			}
 			
 			Airplanes airplane = airplanesRepository.findByaCode("code20");
