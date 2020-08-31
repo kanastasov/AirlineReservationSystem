@@ -82,27 +82,27 @@ public class AirlineReservationSystemApplication {
 			AmericanAirlines americanAirlines = americanAirlinesRepository.findByName("airlines name");
 			if(americanAirlines == null) {
 				americanAirlines = new AmericanAirlines();
-				americanAirlines.setCode("codeAA");
+				americanAirlines.setAaCode("codeAA");
 				americanAirlines.setDetails("New American Airlines");
 				americanAirlines.setName("airlines name");
 				americanAirlines.setCustomer(customer);
 				americanAirlines.setFlight(tempFlight);
 			}
 			
-			Airplanes airplane = airplanesRepository.findByCode("code20");
+			Airplanes airplane = airplanesRepository.findByaCode("code20");
 			if(airplane == null) {
 				airplane = new Airplanes();
-				airplane.setCapacity(120);
-				airplane.setCode("code20");
+				airplane.setCapacity(320);
+				airplane.setACode("code20");
 				airplane.setMake("Transport airplane average size");
 				americanAirlines.addAirplanes(airplane);
 			}
 			
-			Airplanes airplane2 = airplanesRepository.findByCode("code60");
+			Airplanes airplane2 = airplanesRepository.findByaCode("code60");
 			if(airplane2 == null) {
 				airplane2 = new Airplanes();
 				airplane2.setCapacity(120);
-				airplane2.setCode("code60");
+				airplane2.setACode("code60");
 				airplane2.setMake("Model");
 				americanAirlines.addAirplanes(airplane2);
 			}

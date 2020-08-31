@@ -8,7 +8,7 @@ import com.kirilanastasoff.ars.model.airplane.AmericanAirlines;
 
 @Repository
 public interface AirplanesRepository extends JpaRepository<Airplanes, Long> {
-	Airplanes findByCode(String code);
+	Airplanes findByaCode(String aCode);
 	
 //	Airplanes findByCodeAndAmericanAirlines(String code, AmericanAirlines americanAirlines);
 }

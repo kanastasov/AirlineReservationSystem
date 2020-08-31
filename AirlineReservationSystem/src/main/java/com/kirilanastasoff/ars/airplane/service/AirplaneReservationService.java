@@ -23,6 +23,8 @@ public interface AirplaneReservationService {
 	AmericanAirlines addAmericanAirlines(AmericanAirlines americanAirlines);
 	AmericanAirlines updateAmericanAirlines(AmericanAirlines americanAirlines, Flight flight);
 	List<AmericanAirlines> getAllAmericanAirlines();
+	List<AmericanAirlines> getQueryAmericanAirlines();
+	
 	
 	//Flight related methods
 	Flight getFlightById(Long id);

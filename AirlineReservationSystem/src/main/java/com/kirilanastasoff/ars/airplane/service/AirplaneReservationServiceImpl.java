@@ -82,7 +82,7 @@ public class AirplaneReservationServiceImpl implements AirplaneReservationServic
 			Optional<AmericanAirlines> tempAmericanAirlines = Optional.ofNullable(aaRepository.findByName(americanAirlines.getName()));
 			if(!tempAmericanAirlines.isPresent()) {
 				AmericanAirlines american = new AmericanAirlines();
-				american.setCode(tempAmericanAirlines.get().getCode());
+				american.setAaCode(tempAmericanAirlines.get().getAaCode());
 				american.setCustomer(tempAmericanAirlines.get().getCustomer());
 				american.setDetails(tempAmericanAirlines.get().getDetails());
 				american.setListOfAirplanes(tempAmericanAirlines.get().getListOfAirplanes());
@@ -98,7 +98,7 @@ public class AirplaneReservationServiceImpl implements AirplaneReservationServic
 	//todo add findByCodenameandAmericanAirlines
 	@Override
 	public AmericanAirlines updateAmericanAirlines(AmericanAirlines americanAirlines, Flight flight) {
-		AmericanAirlines tempAmericanAirlines = aaRepository.findByCode(americanAirlines.getCode());
+		AmericanAirlines tempAmericanAirlines = aaRepository.findByAaCode(americanAirlines.getAaCode());
 		if(tempAmericanAirlines != null) {
 			if(flight != null) {
 //				Optional<Airplanes> airplanes = Optional.ofNullable(flightRepository.findByAmericanAirlines(tempAmericanAirlines))
@@ -179,5 +179,12 @@ public class AirplaneReservationServiceImpl implements AirplaneReservationServic
 	public List<Airplanes> getAllAirplanes() {
 		return airplanesRepository.findAll();
 	}
+
+	@Override
+	public List<AmericanAirlines> getQueryAmericanAirlines() {
+		return aaRepository.getQueryAmericanAirlines();
+	}
+	
+	
 
 }
