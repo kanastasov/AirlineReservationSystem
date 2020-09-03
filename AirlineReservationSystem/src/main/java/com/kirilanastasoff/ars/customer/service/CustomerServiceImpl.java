@@ -78,10 +78,17 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
 		tempCustomer.setLastName(customer.getLastName());
 		tempCustomer.setPassword(encoder.encode(customer.getPassword()));
 		tempCustomer.setUsername(customer.getUsername());
+		tempCustomer.setEnabled(true);
 		
 		Role customerRole = roleRepository.findByRole("ADMIN");
-		tempCustomer.setRoles(new HashSet<Role>(Arrays.asList(customerRole)));
+		if(customerRole == null) {
+			customerRole = new Role();
+			customerRole.setRole("USER");
+		}
+		roleRepository.save(customerRole);
 		
+		tempCustomer.setRoles(new HashSet<Role>(Arrays.asList(customerRole)));
+
 		this.customerRepository.save(tempCustomer);
 		return tempCustomer;
 	}
