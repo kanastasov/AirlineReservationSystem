@@ -80,6 +80,8 @@ public class Customer {
 	@OneToOne(targetEntity = Ticket.class, mappedBy = "customer", cascade =CascadeType.ALL)
 	private Ticket ticket;
 	
+	@Column(name = "enabled")
+	private Boolean enabled;
 	
 	public void addAmericanAirlines(AmericanAirlines americanAirlines) {
 		this.americanAirlines = americanAirlines;

@@ -96,6 +96,7 @@ public class AirlineReservationSystemApplication {
 				airplane.setACode("code20");
 				airplane.setMake("Transport airplane average size");
 				americanAirlines.addAirplanes(airplane);
+				americanAirlines.getListOfAirplanes().add(airplane);
 			}
 			
 			Airplanes airplane2 = airplanesRepository.findByaCode("code60");
@@ -105,13 +106,14 @@ public class AirlineReservationSystemApplication {
 				airplane2.setACode("code60");
 				airplane2.setMake("Model");
 				americanAirlines.addAirplanes(airplane2);
+				americanAirlines.getListOfAirplanes().add(airplane2);
 			}
 			
-			americanAirlines.getListOfAirplanes().add(airplane);
-			americanAirlines.getListOfAirplanes().add(airplane2);
+
+			
 			
 			customer.addAmericanAirlines(americanAirlines);
-			
+			customerRepository.save(customer);
 			
 			FlightSchedule tempFlightSchedule = new FlightSchedule();;
 			Optional<FlightSchedule> flightSchedule = flightScheduleRepository.findById(111l);
@@ -126,18 +128,17 @@ public class AirlineReservationSystemApplication {
 				tempTicket.setCancellable(false);
 				tempTicket.setSeatNumber(120);
 				tempFlightSchedule.addTicket(tempTicket);
-				tempTicket.setCustomer(customer);
+//				tempTicket.setCustomer(customer);
 			}
 			
 			
 			
-			customer.addTicket(tempTicket);
+//			customer.addTicket(tempTicket);
 			tempFlightSchedule.getTicketsSold().add(tempTicket);
-			
 			flightScheduleRepository.save(tempFlightSchedule);
 			
 			
-			customerRepository.save(customer);
+			
 			
 		};
 	}

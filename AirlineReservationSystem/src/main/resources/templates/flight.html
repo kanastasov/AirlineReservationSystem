@@ -24,7 +24,7 @@
 			<div class="col-md-6 col-md-offset-3">
 				<h1>Flight page</h1>
 				<img th:src="@{/images/flight.jpg}"
-					class="img-responsive center-block" width="600" height="400"
+					class="img-responsive center-block" width="540" height="400"
 					alt="Logo" />
 				<form th:action="@{/flight}" th:object="${flightObj}" method="post">
 
@@ -44,19 +44,14 @@
 							</tr>
 						</tbody>
 					</table>
-
-					<div class="form-group">
-						<div class="row">
-							<div class="col-sm-6 col-sm-offset-3">
-								<input type="submit" name="login-submit" id="login-submit"
-									class="form-control btn btn-primary" value="Add flight" />
-							</div>
-						</div>
-					</div>
 				</form>
 			</div>
 		</div>
-
+		
+		<h1 th:inline = "text"> Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+		<form th:action="@{/logout}" method = "post">
+			<input type = "submit" value ="Log out"/>
+		</form>
 
 	</div>
 

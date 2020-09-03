@@ -50,6 +50,11 @@
 				Welcome <span sec:authentication=={userAccount.username}>User</span>
 			</p>
 		</div>
+		
+		<h1 th:inline = "text"> Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+		<form th:action="@{/logout}" method = "post">
+			<input type = "submit" value ="Log out"/>
+		</form>
 	</div>
 	
 	<div th:replace="fragments/footer.html :: myfooter"></div>

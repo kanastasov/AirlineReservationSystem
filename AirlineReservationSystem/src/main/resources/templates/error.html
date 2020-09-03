@@ -7,7 +7,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<body>
+<body th:with = "httpStatus=${T(org.springframework.http.HttpStatus).valueOf(#response.status)}">
 	<div th:replace="fragments/header.html :: myheader"></div>
 
 <div class="container">
@@ -18,6 +18,10 @@
         <p>
             An error has occurred. Please contact the administrator
         </p>
+        
+        <h1 th:text="|${httpStatus} - ${httpStatus.reasonPhrase}|">404</h1>
+        <p th:utext="${errorMessage}">Error java.lang.NullPointerException</p>
+        <a href="/" th:href="@{/}">Back to Home Page</a>
 </div>
 
 <div th:replace="fragments/footer.html :: myfooter"></div>
