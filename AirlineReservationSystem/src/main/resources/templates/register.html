@@ -14,7 +14,7 @@
 </head>
 <body>
 	<div th:replace="fragments/header.html :: myheader"></div>
-	
+
 	<br>
 
 	<div class="container">
@@ -22,9 +22,6 @@
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
 				<h1>Register page</h1>
-				<img th:src="@{/images/Register.png}"
-					class="img-responsive center-block" width="300" height="300"
-					alt="Logo" />
 				<form action="#" th:action="@{/register}" th:object="${customerObj}"
 					method="POST">
 
@@ -57,8 +54,8 @@
 					</div>
 
 					<div class="form-group">
-						<input type="password" th:field="*{password}" placeholder="password"
-							class="form-control mb-4 col-4"> <label
+						<input type="password" th:field="*{password}"
+							placeholder="password" class="form-control mb-4 col-4"> <label
 							th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
 							class="validation-message"> </label>
 					</div>
@@ -67,6 +64,12 @@
 						Account</button>
 				</form>
 			</div>
+			<div class="col-md-6 col-md-offset-3">
+				<img th:src="@{/images/Register.png}"
+					class="img-responsive center-block" width="450" height="450"
+					alt="Logo" />
+			</div>
+
 		</div>
 
 
@@ -76,6 +79,6 @@
 		th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
 	<script type="text/javascript"
 		th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
-		<div th:replace="fragments/footer.html :: myfooter"></div>
+	<div th:replace="fragments/footer.html :: myfooter"></div>
 </body>
 </html>
