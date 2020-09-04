@@ -23,8 +23,12 @@ import com.kirilanastasoff.ars.repository.airplane.StopRepository;
 import com.kirilanastasoff.ars.repository.airplane.TicketRepository;
 import com.kirilanastasoff.ars.repository.customer.CustomerRepository;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Info;
+
 
 @SpringBootApplication
+@OpenAPIDefinition(info = @Info(title = "AirlineReservationSystemApplication", version = "2.0", description  = "Documentation with Swagger"))
 public class AirlineReservationSystemApplication {
 
 	public static void main(String[] args) {

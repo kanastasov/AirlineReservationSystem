@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kirilanastasoff.ars.airplane.service.AirplanesService;
@@ -44,7 +45,13 @@ import com.kirilanastasoff.ars.model.customer.Customer;
 import com.kirilanastasoff.ars.repository.airplane.FlightRepository;
 import com.lowagie.text.DocumentException;
 
-@Controller
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
+@RestController
+@Api(value = "CustomerController", description = "swagger documentaion for CustomerController")
 public class CustomerController {
 
 	@Autowired
@@ -52,6 +59,22 @@ public class CustomerController {
 
 	@Autowired
 	private PdfService pdfService;
+	
+	@ApiOperation(value = "Customer Controller operation")
+		@ApiResponses(
+				value = {
+						@ApiResponse(code = 100, message = "100 is the message"),
+						@ApiResponse(code = 200, message = "Succesful"),
+						@ApiResponse(code = 201, message = "Created"),
+						@ApiResponse(code = 202, message = "Accepted"),
+						@ApiResponse(code = 302, message = "Found"),
+						@ApiResponse(code = 400, message = "Bad Request"),
+						@ApiResponse(code = 403, message = "Forbidden"),
+						@ApiResponse(code = 404, message = "Not Found"),
+						@ApiResponse(code = 500, message = "Server Error"),
+				}
+				)
+	
 
 	@GetMapping("/")
 	public String showAllCustomers(Model model) {

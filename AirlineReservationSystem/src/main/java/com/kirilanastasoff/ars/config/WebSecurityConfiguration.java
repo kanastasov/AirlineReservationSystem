@@ -33,21 +33,20 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		String loginPage = "/login";
 		String logoutPage = "/logout";
 
-		http.authorizeRequests()
-		.antMatchers(loginPage, "/showCustomerForm" , "/register").permitAll()
-		.antMatchers("/index", "/flight" , "/airplane", "/americanairlines", "/profile").hasAuthority("USER")
-		.antMatchers("/admin/**").hasAuthority("ADMIN")
-				.anyRequest().authenticated().and().csrf().disable().formLogin().loginPage(loginPage)
-				.failureUrl("/login?error=true").defaultSuccessUrl("/",true).usernameParameter("username")
-				.passwordParameter("password").and().logout()
+		http.authorizeRequests().antMatchers(loginPage, "/showCustomerForm", "/register").permitAll()
+				.antMatchers("/index", "/flight", "/airplane", "/americanairlines", "/profile").hasAuthority("USER")
+				.antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest().authenticated().and().csrf().disable()
+				.formLogin().loginPage(loginPage).failureUrl("/login?error=true").defaultSuccessUrl("/", true)
+				.usernameParameter("username").passwordParameter("password").and().logout()
 				.logoutRequestMatcher(new AntPathRequestMatcher(logoutPage)).logoutSuccessUrl(loginPage).and()
 				.exceptionHandling();
 	}
 
-
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/webjars/**", "/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
+		web.ignoring().antMatchers("/webjars/**", "/resources/**", "/static/**", "/css/**", "/js/**", "/images/**",
+				"/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/security",
+				"/swagger-ui.html");
 	}
 
 }
