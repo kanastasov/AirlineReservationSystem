@@ -5,7 +5,9 @@ Docker: Containerising,
 MySql: Relational DB,
 Swagger: API documentation,
 Thymeleaf: Server side templating engine
-Spring Security & JWT for Authentication
+Spring Security, Spring MVC
+
+
 
 
 
