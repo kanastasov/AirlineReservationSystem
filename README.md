@@ -7,7 +7,13 @@ Swagger: API documentation,
 Thymeleaf: Server side templating engine
 Spring Security, Spring MVC
 
-
+You can start the application by Docker or
+you can also start the application with spring boot
+(need to 
+create database airlinereservationsystem; 
+use airlinereservationsystem in mysql) 
+before run the main class(AirlineReservationSystemApplication) 
+as java application.
 
 
 
