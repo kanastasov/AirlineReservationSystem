@@ -170,7 +170,7 @@
 			<version>3.0.0</version>
 		</dependency>
 
-	<dependency>
+		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-ui</artifactId>
 			<version>1.4.3</version>
@@ -180,6 +180,9 @@
 	<build>
 		<plugins>
 			<plugin>
+				<configuration>
+					<finalName>dockerars</finalName>
+				</configuration>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>

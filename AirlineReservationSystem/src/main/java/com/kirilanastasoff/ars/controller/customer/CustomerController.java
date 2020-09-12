@@ -50,7 +50,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-@RestController
+@Controller
 @Api(value = "CustomerController", description = "swagger documentaion for CustomerController")
 public class CustomerController {
 
